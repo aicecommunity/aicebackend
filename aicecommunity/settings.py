@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 
 from pathlib import Path
 
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -37,6 +38,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
+    'rest_framework_simplejwt',
+    'cloudinary',
+    'cloudinary_storage',
+    'user',
+
+
 ]
 
 MIDDLEWARE = [
@@ -74,11 +82,16 @@ WSGI_APPLICATION = 'aicecommunity.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'aice_mq9p',
+        'USER': 'aice',
+        'PASSWORD': 'VdB6fk9dIQB2eHCvdb4QEeHi8f66Xi3B',
+        'HOST': 'dpg-d2jp8qumcj7s739ga450-a.oregon-postgres.render.com',
+        'PORT': '5432'
     }
 }
 
+# postgresql://aice:VdB6fk9dIQB2eHCvdb4QEeHi8f66Xi3B@dpg-d2jp8qumcj7s739ga450-a.oregon-postgres.render.com/aice_mq9p
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
@@ -120,3 +133,22 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+AUTH_USER_MODEL = 'user.CustomUser'
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+}
+
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': 'drw7rsyaa',
+    'API_KEY': '376849678198392',
+    'API_SECRET': 'me-7bYJPpXJdPuJJlAJM6KcrqQo',
+}
+
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
+MEDIA_URL = '/media/'
