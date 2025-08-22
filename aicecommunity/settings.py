@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
+from datetime import timedelta
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -40,9 +41,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'rest_framework_simplejwt',
+    'rest_framework_simplejwt.token_blacklist',
     'cloudinary',
     'cloudinary_storage',
     'user',
+    'api',
 
 
 ]
@@ -62,7 +65,7 @@ ROOT_URLCONF = 'aicecommunity.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -143,6 +146,13 @@ REST_FRAMEWORK = {
     ),
 }
 
+SIMPLE_JWT= {
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=5),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
+    "ROTATE_REFRESH_TOKENS": True,
+    "BLACKLIST_AFTER_ROTATION": True,
+}
+
 CLOUDINARY_STORAGE = {
     'CLOUD_NAME': 'drw7rsyaa',
     'API_KEY': '376849678198392',
@@ -152,3 +162,12 @@ CLOUDINARY_STORAGE = {
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 MEDIA_URL = '/media/'
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'aicecommunity@gmail.com'
+EMAIL_HOST_PASSWORD = 'vohxyelnpnckhhuq'
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER

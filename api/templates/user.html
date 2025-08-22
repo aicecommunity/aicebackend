@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>API Documentation - User Authentication</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 text-gray-800 font-sans">
+  <div class="max-w-5xl mx-auto p-6">
+    <!-- Header -->
+    <header class="mb-8">
+      <h1 class="text-4xl font-bold text-center text-blue-600">User Authentication API Documentation</h1>
+      <p class="text-center text-gray-600 mt-2">
+        Base URL:
+        <code class="bg-gray-200 px-2 py-1 rounded">http://127.0.0.1:8000/user</code>
+      </p>
+    </header>
+
+    <!-- Signup -->
+    <section class="bg-white shadow-md rounded-lg p-6 mb-6">
+      <h2 class="text-2xl font-semibold text-blue-500 mb-2">1. Signup</h2>
+      <p class="mb-2 text-gray-700">Create a new user account.</p>
+      <p><strong>Endpoint:</strong> <code class="bg-gray-200 px-2 py-1 rounded">POST /signup/</code></p>
+      <h3 class="mt-4 font-semibold">Request Body (JSON):</h3>
+      <pre class="bg-gray-900 text-green-400 p-4 rounded mt-2 overflow-x-auto">{
+  "first_name": "Olawale",
+  "middle_name": "Ariike",
+  "last_name": "Akin",
+  "country_of_residence": "Nigeria",
+  "whatsapp_number": "+2348012344312",
+  "email": "Olawale@example.com",
+  "password": "Olawale@123",
+  "confirm_password": "Olawale@123"
+}</pre>
+      <h3 class="mt-4 font-semibold">Response (201 Created):</h3>
+      <pre class="bg-gray-900 text-green-400 p-4 rounded mt-2 overflow-x-auto">{
+  "message": "User created successfully",
+  "user_id": 1
+}</pre>
+    </section>
+
+    <!-- Login -->
+    <section class="bg-white shadow-md rounded-lg p-6 mb-6">
+      <h2 class="text-2xl font-semibold text-blue-500 mb-2">2. Login</h2>
+      <p class="mb-2 text-gray-700">Authenticate an existing user and get tokens.</p>
+      <p><strong>Endpoint:</strong> <code class="bg-gray-200 px-2 py-1 rounded">POST /login/</code></p>
+      <h3 class="mt-4 font-semibold">Request Body (JSON):</h3>
+      <pre class="bg-gray-900 text-green-400 p-4 rounded mt-2 overflow-x-auto">{
+  "email": "Olawale@example.com",
+  "password": "Olawale@123"
+}</pre>
+      <h3 class="mt-4 font-semibold">Response (200 OK):</h3>
+      <pre class="bg-gray-900 text-green-400 p-4 rounded mt-2 overflow-x-auto">{
+  "access": "<JWT_ACCESS_TOKEN>",
+  "refresh": "<JWT_REFRESH_TOKEN>"
+}</pre>
+    </section>
+
+    <!-- Token Refresh -->
+    <section class="bg-white shadow-md rounded-lg p-6 mb-6">
+      <h2 class="text-2xl font-semibold text-blue-500 mb-2">3. Refresh Token</h2>
+      <p class="mb-2 text-gray-700">Refresh the access token using a valid refresh token.</p>
+      <p><strong>Endpoint:</strong> <code class="bg-gray-200 px-2 py-1 rounded">POST /token/refresh</code></p>
+      <h3 class="mt-4 font-semibold">Request Body (JSON):</h3>
+      <pre class="bg-gray-900 text-green-400 p-4 rounded mt-2 overflow-x-auto">{
+  "refresh": "<JWT_REFRESH_TOKEN>"
+}</pre>
+      <h3 class="mt-4 font-semibold">Response (200 OK):</h3>
+      <pre class="bg-gray-900 text-green-400 p-4 rounded mt-2 overflow-x-auto">{
+  "access": "<NEW_JWT_ACCESS_TOKEN>"
+}</pre>
+    </section>
+
+    <!-- Logout -->
+    <section class="bg-white shadow-md rounded-lg p-6 mb-6">
+      <h2 class="text-2xl font-semibold text-blue-500 mb-2">4. Logout</h2>
+      <p class="mb-2 text-gray-700">
+        Invalidate the refresh token and log out the user. Use the <strong>access token</strong> as the Bearer token in the request header and send the refresh token in the body.
+      </p>
+      <p><strong>Endpoint:</strong> <code class="bg-gray-200 px-2 py-1 rounded">POST /logout/</code></p>
+      <h3 class="mt-4 font-semibold">Headers:</h3>
+      <pre class="bg-gray-900 text-green-400 p-4 rounded mt-2 overflow-x-auto">Authorization: Bearer <JWT_ACCESS_TOKEN></pre>
+      <h3 class="mt-4 font-semibold">Request Body (JSON):</h3>
+      <pre class="bg-gray-900 text-green-400 p-4 rounded mt-2 overflow-x-auto">{
+  "refresh": "<JWT_REFRESH_TOKEN>"
+}</pre>
+      <h3 class="mt-4 font-semibold">Response (200 OK):</h3>
+      <pre class="bg-gray-900 text-green-400 p-4 rounded mt-2 overflow-x-auto">{
+  "message": "User logged out successfully"
+}</pre>
+    </section>
+
+    <!-- Profile -->
+    <section class="bg-white shadow-md rounded-lg p-6 mb-6">
+      <h2 class="text-2xl font-semibold text-blue-500 mb-2">5. Profile</h2>
+      <p class="mb-2 text-gray-700">Retrieve, update, or delete the authenticated user's profile.</p>
+      <p><strong>Endpoints:</strong></p>
+      <ul class="list-disc pl-5 text-gray-700 space-y-1">
+        <li><code>GET /profile/</code> - Retrieve user profile</li>
+        <li><code>PUT /profile/</code> or <code>PATCH /profile/</code> - Update profile details</li>
+        <li><code>DELETE /profile/</code> - Delete user account</li>
+      </ul>
+      <h3 class="mt-4 font-semibold">Headers:</h3>
+      <pre class="bg-gray-900 text-green-400 p-4 rounded mt-2 overflow-x-auto">Authorization: Bearer <JWT_ACCESS_TOKEN></pre>
+      <h3 class="mt-4 font-semibold">Sample Update Request Body:</h3>
+      <pre class="bg-gray-900 text-green-400 p-4 rounded mt-2 overflow-x-auto">{
+  "first_name": "Olawale",
+  "country_of_residence": "Ghana",
+  "whatsapp_number": "+2338012344312"
+}</pre>
+    </section>
+
+    <!-- Change Password -->
+    <section class="bg-white shadow-md rounded-lg p-6 mb-6">
+      <h2 class="text-2xl font-semibold text-blue-500 mb-2">6. Change Password</h2>
+      <p class="mb-2 text-gray-700">Change the password of the authenticated user.</p>
+      <p><strong>Endpoint:</strong> <code class="bg-gray-200 px-2 py-1 rounded">PUT /change-password/</code></p>
+      <h3 class="mt-4 font-semibold">Headers:</h3>
+      <pre class="bg-gray-900 text-green-400 p-4 rounded mt-2 overflow-x-auto">Authorization: Bearer <JWT_ACCESS_TOKEN></pre>
+      <h3 class="mt-4 font-semibold">Request Body (JSON):</h3>
+      <pre class="bg-gray-900 text-green-400 p-4 rounded mt-2 overflow-x-auto">{
+  "old_password": "Olawale@123",
+  "new_password": "Olagunju@456",
+  "confirm_password": "Olagunju@456"
+}</pre>
+      <h3 class="mt-4 font-semibold">Response (200 OK):</h3>
+      <pre class="bg-gray-900 text-green-400 p-4 rounded mt-2 overflow-x-auto">{
+  "details": "Password updated successfully."
+}</pre>
+    </section>
+
+    <!-- Notes -->
+    <section class="bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded">
+      <h2 class="text-xl font-semibold text-yellow-700 mb-2">Important Notes</h2>
+      <ul class="list-disc pl-5 text-gray-700 space-y-1">
+        <li>All endpoints require <strong>JSON-formatted</strong> requests.</li>
+        <li>Include the access token in the <code>Authorization: Bearer &lt;token&gt;</code> header for authenticated endpoints.</li>
+        <li>Use HTTPS in production for security.</li>
+      </ul>
+    </section>
+  </div>
+</body>
+</html>

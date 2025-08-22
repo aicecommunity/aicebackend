@@ -4,6 +4,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 import datetime
 from cloudinary.models import CloudinaryField
+from datetime import timedelta
 
 # Create your models here.
 class CustomUserManager(BaseUserManager):
@@ -23,6 +24,8 @@ class CustomUserManager(BaseUserManager):
 
 
 class CustomUser(AbstractUser):
+    verification_code = models.CharField(max_length=6, blank=True, null=True)
+    code_expiry = models.DateTimeField(blank=True, null=True)
     username = None
     middle_name = models.CharField(max_length=150, blank=True, null=True)
     country_of_residence = models.CharField(max_length=100)
@@ -61,3 +64,5 @@ class CustomUser(AbstractUser):
 
     def __str__(self):
         return self.email
+
+
