@@ -130,6 +130,91 @@
 }</pre>
     </section>
 
+    <!-- Verification & Email Utilities -->
+    <section class="bg-white shadow-md rounded-lg p-6 mb-6">
+      <h2 class="text-2xl font-semibold text-blue-500 mb-2">7. Verification & Email Utilities</h2>
+      <p class="mb-4 text-gray-700">
+        These endpoints handle verification codes and welcome emails. Codes are sent via email and have different uses based on context.
+      </p>
+
+      <!-- Request Verification Code -->
+      <div class="mb-6">
+        <h3 class="text-xl font-semibold text-blue-400">7.1 Request Verification Code (Sensitive Actions)</h3>
+        <p class="text-gray-700 mb-2">Use this for sensitive actions like password reset.</p>
+        <p><strong>Endpoint:</strong> <code class="bg-gray-200 px-2 py-1 rounded">POST /request-code/</code></p>
+        <h4 class="mt-2 font-semibold">Request Body (JSON):</h4>
+        <pre class="bg-gray-900 text-green-400 p-4 rounded mt-2 overflow-x-auto">{
+  "email": "olagunju@gmail.com"
+}</pre>
+        <h4 class="mt-2 font-semibold">Response (200 OK):</h4>
+        <pre class="bg-gray-900 text-green-400 p-4 rounded mt-2 overflow-x-auto">{
+  "message": "Verification code sent successfully"
+}</pre>
+      </div>
+
+      <!-- Verify Code -->
+      <div class="mb-6">
+        <h3 class="text-xl font-semibold text-blue-400">7.2 Verify Code (Sensitive Actions)</h3>
+        <p class="text-gray-700 mb-2">Verify the code received for sensitive processes like resetting a password.</p>
+        <p><strong>Endpoint:</strong> <code class="bg-gray-200 px-2 py-1 rounded">POST /verify-code/</code></p>
+        <h4 class="mt-2 font-semibold">Request Body (JSON):</h4>
+        <pre class="bg-gray-900 text-green-400 p-4 rounded mt-2 overflow-x-auto">{
+  "email": "olagunju@gmail.com",
+  "code": "216450"
+}</pre>
+        <h4 class="mt-2 font-semibold">Response (200 OK):</h4>
+        <pre class="bg-gray-900 text-green-400 p-4 rounded mt-2 overflow-x-auto">{
+  "message": "Code verified successfully"
+}</pre>
+      </div>
+
+      <!-- Request Free Code -->
+      <div class="mb-6">
+        <h3 class="text-xl font-semibold text-blue-400">7.3 Request Free Verification Code (Signup)</h3>
+        <p class="text-gray-700 mb-2">Use this during signup to verify the user's email.</p>
+        <p><strong>Endpoint:</strong> <code class="bg-gray-200 px-2 py-1 rounded">POST /request-free-code/</code></p>
+        <h4 class="mt-2 font-semibold">Request Body (JSON):</h4>
+        <pre class="bg-gray-900 text-green-400 p-4 rounded mt-2 overflow-x-auto">{
+  "email": "olagunju@gmail.com"
+}</pre>
+        <h4 class="mt-2 font-semibold">Response (200 OK):</h4>
+        <pre class="bg-gray-900 text-green-400 p-4 rounded mt-2 overflow-x-auto">{
+  "message": "Verification code sent successfully"
+}</pre>
+      </div>
+
+      <!-- Verify Free Code -->
+      <div class="mb-6">
+        <h3 class="text-xl font-semibold text-blue-400">7.4 Verify Free Code (Signup)</h3>
+        <p class="text-gray-700 mb-2">Validate the code sent during signup.</p>
+        <p><strong>Endpoint:</strong> <code class="bg-gray-200 px-2 py-1 rounded">POST /verify-free-code/</code></p>
+        <h4 class="mt-2 font-semibold">Request Body (JSON):</h4>
+        <pre class="bg-gray-900 text-green-400 p-4 rounded mt-2 overflow-x-auto">{
+  "email": "olagunju@gmail.com",
+  "code": "216450"
+}</pre>
+        <h4 class="mt-2 font-semibold">Response (200 OK):</h4>
+        <pre class="bg-gray-900 text-green-400 p-4 rounded mt-2 overflow-x-auto">{
+  "message": "Code verified successfully"
+}</pre>
+      </div>
+
+      <!-- Send Karibu Mail -->
+      <div class="mb-6">
+        <h3 class="text-xl font-semibold text-blue-400">7.5 Send Karibu Mail</h3>
+        <p class="text-gray-700 mb-2">Send a welcome email after successful signup.</p>
+        <p><strong>Endpoint:</strong> <code class="bg-gray-200 px-2 py-1 rounded">POST /send-karibu-mail/</code></p>
+        <h4 class="mt-2 font-semibold">Request Body (JSON):</h4>
+        <pre class="bg-gray-900 text-green-400 p-4 rounded mt-2 overflow-x-auto">{
+  "email": "olagunju@gmail.com"
+}</pre>
+        <h4 class="mt-2 font-semibold">Response (200 OK):</h4>
+        <pre class="bg-gray-900 text-green-400 p-4 rounded mt-2 overflow-x-auto">{
+  "message": "Welcome email sent successfully"
+}</pre>
+      </div>
+    </section>
+
     <!-- Notes -->
     <section class="bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded">
       <h2 class="text-xl font-semibold text-yellow-700 mb-2">Important Notes</h2>
@@ -137,6 +222,7 @@
         <li>All endpoints require <strong>JSON-formatted</strong> requests.</li>
         <li>Include the access token in the <code>Authorization: Bearer &lt;token&gt;</code> header for authenticated endpoints.</li>
         <li>Use HTTPS in production for security.</li>
+        <li>Verification codes expire after 10 minutes.</li>
       </ul>
     </section>
   </div>

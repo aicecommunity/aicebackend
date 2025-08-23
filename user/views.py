@@ -13,10 +13,11 @@ import cloudinary
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
-from .utils import send_verification_code
+from .utils import send_verification_code, send_welcome_email
 from django.utils import timezone
 from django.core.cache import cache
 from django.core.mail import EmailMultiAlternatives
+from variables import *
 
 
 
@@ -62,6 +63,7 @@ class ProfileView(generics.RetrieveUpdateDestroyAPIView):
 
     def get_object(self):
         return self.request.user
+
     
     def update(self, request, *args, **kwargs):
 
@@ -117,6 +119,7 @@ class ChangePasswordView(generics.UpdateAPIView):
             status=status.HTTP_200_OK
         )
 
+# FOR VERIFICATION, LIKE FORGET PASSWORD, ETC
 @api_view(['POST'])
 def request_verification_code(request):
     email = request.data.get('email')
@@ -204,3 +207,19 @@ def verify_free_email_code(request):
         return Response({"message": "Verification successful."})
 
     return Response({"error": "Invalid or expired code."}, status=status.HTTP_400_BAD_REQUEST)
+
+# EMAIL FOR WELCOME MESSAGE AFTER SIGNING UP
+@api_view(['post'])
+def send_karibu_mail(request):
+    email = request.data.get('email')
+    try:
+        user = CustomUser.objects.get(email=email)
+        send_welcome_email(user, FRONTEND_URL, FRONTEND_URL, SUPPORT_EMAIL, SUPPORT_EMAIL, SUPPORT_EMAIL)
+        return Response({
+            "message": "Welcome Message sent to your email."
+        })
+    except CustomUser.DoesNotExist:
+        return Response({
+            "error": "User with this email does not exist."
+        }, status=status.HTTP_404_NOT_FOUND)
+    

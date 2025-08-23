@@ -2,7 +2,7 @@
 
 from django.urls import path
 from .views import SignupAPIView
-from user.views import CustomTokenObtainPairView, CustomLoginAPIView, LogoutView, ProfileView, ChangePasswordView, request_verification_code, verify_code, request_free_email_code, verify_free_email_code
+from user.views import CustomTokenObtainPairView, CustomLoginAPIView, LogoutView, ProfileView, ChangePasswordView, request_verification_code, verify_code, request_free_email_code, verify_free_email_code, send_karibu_mail
 from rest_framework_simplejwt.views import TokenRefreshView
 
 
@@ -18,4 +18,5 @@ urlpatterns = [
     path('verify-code/', verify_code, name='verify-code'),
     path('request-free-code/', request_free_email_code, name='request-free-code'),
     path('verify-free-code/', verify_free_email_code, name='verify-free-code'),
+    path('send-karibu-mail/', send_karibu_mail, name='send-karibu-mail'),
 ]
