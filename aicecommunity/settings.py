@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-1na39di81gib9y7h)69dvny4qo42#c9)7t#m@nij#$*xqq@ks(
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['aicebackend.onrender.com', 'localhost']
 
 
 # Application definition
@@ -178,3 +178,5 @@ DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 CORS_ALLOW_ALL_ORIGINS = True
 
 CORS_ALLOW_CREDENTIALS = True
+
+
